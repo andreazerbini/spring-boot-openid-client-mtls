@@ -59,7 +59,8 @@ public class TrustStoreConfig {
         TrustManagerFactory trustManagerFactory = null;
 
         if (isTrustStoreConfigured()) {
-            trustManagerFactory = TrustManagerFactory.getInstance(KeyManagerFactory.getDefaultAlgorithm());
+            // Use the default algorithm for trust managers rather than key managers
+            trustManagerFactory = TrustManagerFactory.getInstance(TrustManagerFactory.getDefaultAlgorithm());
             try (InputStream ksFileInputStream = new ClassPathResource(trustStorePath).getInputStream()) {
                 trustStore.load(ksFileInputStream, trustStorePassword.toCharArray());
                 trustManagerFactory.init(trustStore);
